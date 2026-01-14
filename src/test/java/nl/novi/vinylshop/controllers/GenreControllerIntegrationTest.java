@@ -83,7 +83,11 @@ public class GenreControllerIntegrationTest {
                         .content(objectMapper.writeValueAsString(genreRequestDTO)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$.name").value("Rock"))
-                .andExpect(jsonPath("$.description").value("Something Loud"));
+                .andExpect(jsonPath("$.description").value("Something Loud"))
+                .andReturn();
+
+        GenreResponseDTO genreResponseDTO = objectMapper.readValue(response.getResponse().getContentAsString(), GenreResponseDTO.class);
+        Assertions.assertEquals("Rock", genreResponseDTO.getName());
     }
 
     @Test

@@ -42,8 +42,8 @@ class GenreServiceTest {
     GenreService genreService;
 
     GenreEntity mockEntity;
-    GenreResponseDTO mockDto;
-    GenreRequestDTO mockRequest;
+    GenreResponseDTO mockResponseDTO;
+    GenreRequestDTO mockRequestDTO;
 
     @Captor
     ArgumentCaptor<AlbumEntity> albumCaptor;
@@ -55,22 +55,22 @@ class GenreServiceTest {
         mockEntity.setName("test");
         mockEntity.setDescription("testing");
 
-        mockDto = new GenreResponseDTO();
-        mockDto.setId(1L);
-        mockDto.setName("test");
-        mockDto.setDescription("testing");
+        mockResponseDTO = new GenreResponseDTO();
+        mockResponseDTO.setId(1L);
+        mockResponseDTO.setName("test");
+        mockResponseDTO.setDescription("testing");
 
-        mockRequest = new GenreRequestDTO();
-        mockRequest.setName("test");
-        mockRequest.setDescription("testing");
+        mockRequestDTO = new GenreRequestDTO();
+        mockRequestDTO.setName("test");
+        mockRequestDTO.setDescription("testing");
     }
 
     @Test
-    @DisplayName("Should return a list of allGenres")
+    @DisplayName("Return list of Genres")
     void findAllGenres() {
         //Arrange
         List<GenreEntity> entities = List.of(mockEntity);
-        List<GenreResponseDTO> dtos = List.of(mockDto);
+        List<GenreResponseDTO> dtos = List.of(mockResponseDTO);
         given(genreRepository.findAll()).willReturn(entities);
         given(genreDTOMapper.mapToDto(entities)).willReturn(dtos);
 
@@ -89,14 +89,14 @@ class GenreServiceTest {
         //Arrange
         Long id = 1L;
         given(genreRepository.findById(id)).willReturn(Optional.of(mockEntity));
-        given(genreDTOMapper.mapToDto(mockEntity)).willReturn(mockDto);
+        given(genreDTOMapper.mapToDto(mockEntity)).willReturn(mockResponseDTO);
 
         //Act
         GenreResponseDTO result = genreService.findGenreById(id);
 
         //Assert
         assertNotNull(result);
-        assertEquals(mockDto.getId(), result.getId());
+        assertEquals(mockResponseDTO.getId(), result.getId());
         verify(genreRepository).findById(id);
         verify(genreDTOMapper).mapToDto(mockEntity);
 
@@ -106,12 +106,12 @@ class GenreServiceTest {
     @DisplayName("createGenre from RequestDTO")
     void createGenre() {
         //Arrange
-        given(genreDTOMapper.mapToEntity(mockRequest)).willReturn(mockEntity);
+        given(genreDTOMapper.mapToEntity(mockRequestDTO)).willReturn(mockEntity);
         given(genreRepository.save(mockEntity)).willReturn(mockEntity);
-        given(genreDTOMapper.mapToDto(mockEntity)).willReturn(mockDto);
+        given(genreDTOMapper.mapToDto(mockEntity)).willReturn(mockResponseDTO);
 
         //Act
-        GenreResponseDTO result = genreService.createGenre(mockRequest);
+        GenreResponseDTO result = genreService.createGenre(mockRequestDTO);
 
         //Assert
         assertEquals("test", result.getName());

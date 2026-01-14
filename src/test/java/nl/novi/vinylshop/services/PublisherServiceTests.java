@@ -36,6 +36,7 @@ class PublisherServiceTests {
 
     @Test
     void findAllPublishers_shouldReturnListOfPublisherResponseDTOs() {
+        //Edhub-Example!!
         // Arrange
         PublisherResponseDTO publisherdto1 = new PublisherResponseDTO();
         publisherdto1.setName("Updated Name");

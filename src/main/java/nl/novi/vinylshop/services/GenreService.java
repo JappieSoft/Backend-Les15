@@ -70,7 +70,7 @@ public class GenreService {
     }
 
     //    Deze methode wordt niet gebruikt, maar dienst als alternatief voorbeeld voor de "getGenreEntity"-methode
-    private GenreEntity getGenreById(Long id){
+/*    private GenreEntity getGenreById(Long id){
         Optional<GenreEntity> genreEntityOptional = genreRepository.findById(id);
 
 //        Een if-statement waar je expliciet de Optional.isPresent() of Optional.isEmpty() checkt, is één variant om met de optional om te gaan.
@@ -79,5 +79,5 @@ public class GenreService {
         } else {
             throw new RecordNotFoundException("Genre " + id +" not found");
         }
-    }
+    }*/
 }
